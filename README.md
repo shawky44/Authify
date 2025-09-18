@@ -1,147 +1,129 @@
-# 🔐 Authify – Authentication & User Management API  
+# 🔐 Authify – Authentication & User Management API
 
-A **Node.js + Express + MongoDB** backend application for secure user authentication and management.  
-It supports **JWT-based authentication, email verification, password hashing**, and basic post management.  
-
----
+A secure Node.js + Express + MongoDB authentication and user management API with features like JWT-based authentication, password hashing, email services, and input validation.
 
 ## 🚀 Features
-- User Registration & Login.  
-- Password Hashing using `bcryptjs`.  
-- Authentication with **JWT (JSON Web Tokens)**.  
-- Email Verification with `nodemailer`.  
-- CRUD operations for Posts (with user ownership).  
-- Input validation using **Joi**.  
-- Secure cookies for token storage.  
 
----
+- 🔑 User Authentication (Register, Login, Logout).
+- 🔒 Secure password hashing with bcryptjs.
+- 🪪 JWT for secure API access.
+- 📧 Email services with nodemailer (e.g., password reset, verification).
+- 🗄️ MongoDB integration with Mongoose.
+- 🛡️ Security with helmet, cors, and cookies.
+- ✅ Input validation using joi and express-validator.
+- 🌐 Environment variables with dotenv.
 
 ## 📂 Project Structure
 ```
 .
 ├── src
-│   ├── Controllers
-│   │   ├── authController.js
-│   │   └── postController.js
-│   ├── Models
-│   │   ├── userModel.js
-│   │   └── postModel.js
-│   ├── Middlewares
-│   │   └── identifier.js
+│   ├── Controller
+│   │   └── authController.js
+│   ├── Model
+│   │   └── userModel.js
+│   ├── Routes
+│   │   └── authRoute.js
 │   ├── Utils
-│   │   └── validationSchema.js
+│   │   └── emailService.js
 │   └── index.js
 ├── package.json
 ├── .env
 └── README.md
 ```
 
----
+## ⚙️ Installation & Setup
 
-## ⚙️ Installation & Setup  
-
-1. Clone the repo:  
-   ```bash
-   git clone https://github.com/your-username/Authify.git
-   cd Authify
-   ```
-
-2. Install dependencies:  
-   ```bash
-   npm install
-   ```
-
-3. Create `.env` file:  
-   ```env
-   PORT=3000
-   MONGO_URI=mongodb://localhost:27017/authify
-   TOKEN_SECRET=your-secret-key
-   NODE_ENV=development
-   ```
-
-4. Start the server:  
-   ```bash
-   npm run dev   # with nodemon
-   npm start     # normal start
-   ```
-
-👉 The server runs on `http://localhost:3000/`  
-
----
-
-## 🔑 API Endpoints  
-
-### 👤 User Auth  
-
-#### Register  
-```http
-POST /api/auth/register
+Clone the repository:
+```bash
+git clone https://github.com/your-username/Authify.git
+cd Authify
 ```
-**Body**:  
+
+Install dependencies:
+```bash
+npm install
+```
+
+Create `.env` file and add your configs:
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/authify
+TOKEN_SECRET=yourSuperSecretKey
+EMAIL_USER=yourEmail@example.com
+EMAIL_PASS=yourEmailPassword
+```
+
+Run the server:
+```bash
+npm run dev   # development with nodemon
+npm start     # production
+```
+
+👉 Server will start at [http://localhost:5000](http://localhost:5000)
+
+## 🔑 API Endpoints
+
+### 📝 Register
+`POST /api/auth/register`
+```json
+{
+  "name": "Shawky",
+  "email": "shawky@example.com",
+  "password": "mypassword123"
+}
+```
+
+### 🔓 Login
+`POST /api/auth/login`
 ```json
 {
   "email": "shawky@example.com",
-  "password": "12345678"
+  "password": "mypassword123"
 }
 ```
+✅ Returns JWT token.
 
-#### Login  
-```http
-POST /api/auth/login
+### 🚪 Logout
+`POST /api/auth/logout`  
+✅ Destroys session/token.
+
+### 👤 Get Profile
+`GET /api/auth/me`
 ```
-**Body**:  
-```json
-{
-  "email": "shawky@example.com",
-  "password": "12345678"
-}
+Authorization: Bearer <your-token>
 ```
+✅ Returns user data.
 
-✅ Returns JWT + sets cookie.  
-
----
-
-### 📝 Posts  
-
-#### Create Post  
-```http
-POST /api/posts
-```
-**Headers**:  
-`Authorization: Bearer <token>`  
-
-**Body**:  
-```json
-{
-  "title": "My first post",
-  "description": "This is the content of my post."
-}
-```
-
----
+### 🔄 Reset Password (via Email)
+`POST /api/auth/reset-password`  
+✅ Sends password reset link using nodemailer.
 
 ## 🛠️ Tech Stack
-- [Node.js](https://nodejs.org/)  
-- [Express.js](https://expressjs.com/)  
-- [MongoDB](https://www.mongodb.com/)  
-- [Mongoose](https://mongoosejs.com/)  
-- [JWT](https://jwt.io/)  
-- [bcryptjs](https://www.npmjs.com/package/bcryptjs)  
-- [nodemailer](https://nodemailer.com/)  
-- [Joi](https://joi.dev/)  
-- [dotenv](https://www.npmjs.com/package/dotenv)  
 
----
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- bcryptjs
+- jsonwebtoken
+- nodemailer
+- joi
+- express-validator
 
-## 📌 Best Practices in This Project
-- Separation of concerns (Controllers, Models, Routes, Middlewares).  
-- Secure JWT authentication with expiry.  
-- Validation with **Joi** + Mongoose schema rules.  
-- Error handling with proper status codes.  
-- Environment variables for secrets.  
-- Consistent JSON response format.  
+## 📌 Best Practices in Authify
 
----
+- Separate folders for controllers, models, routes, and utils.
+- Strong password hashing with bcryptjs.
+- Secure authentication using JWT.
+- Validation at both request & schema levels.
+- Safe environment configs with `.env`.
+- Consistent API responses.
+- Helmet + CORS for security.
+
+## 👨‍💻 Author
+
+Created by **Shawky ✨**
 
 ## 📜 License
-This project is licensed under the MIT License.  
+
+This project is licensed under the **MIT License**.
